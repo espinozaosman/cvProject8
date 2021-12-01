@@ -61,7 +61,7 @@
 			scrollingSpeed: 280,
 			menu: '#menu, #menuMain',
 			
-			anchors: ['About', 'Services', 'Skills', 'Resume', 'Portfolio', 'Awards', 'Testimonials', 'Clients', 'Contact'],
+			anchors: ['About', 'Skills', 'Resume', 'Portfolio', 'Blog', 'Contact'],
 			loopTop: false,
 			loopBottom: false,
 			navigation: {
