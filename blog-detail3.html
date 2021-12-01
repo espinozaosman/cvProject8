@@ -101,53 +101,67 @@
                 	<ul class="post-meta">
                         <li><span class="icon flaticon-user"></span>By Aleksy Zielinski</li>
                     </ul>
-                    <h2>How to optimize your context value</h2>
-                    <div class="text">The simplest solution to optimizing your context value involves using useReducer or useState for your state management and putting the state in one context provider and the dispatch in another.</div>
+                    <h2>Function forms</h2>
                 </div>
                 <div class="image d-flex justify-content-center">
-                	<img src="images/resource/Copia de blog-1.png" alt=""/>
+                	<img src="images/resource/Copia de blog-3.png" alt=""/>
                 </div>
                 <div class="lower-box">
                 	<div class="text">
-                        <blockquote>
-                        	<div class="quote-inner">
-                            	<div class="quote-text">NOTE: Before we get started, I want to make sure you know the times it's important to optimize your context value is when a certain combination of the following conditions are met:
-                                    <br>
-                                    <br>
-                                    <ul class="list-style-two">
-                                        <li>Your context value changes frequently</li>
-                                        <li>Your context has many consumers</li>
-                                        <li>You are bothering to use React.memo (because things are legit slow)</li>
-                                        <li>You've actually measured things and you know it's slow and needs to be optimized</li>
-                                    </ul>
-                                    <br>
-                                    If that explains your situation, then read on (and don't miss the alternative solution which is honestly probably better anyway). In fact, the alternative is definitely better and I've reworked the blog post to remove my original recommendation and just show the alternative. If you want to see my original, read the original stuff here.
-No seriously, if you're going to do this stuff just because you think your code might be slow, then don't bother. I'm not joking. React is really fast and adding complexity in the name of performance when performance is good enough is just wasteful of your "complexity budget"
-                                </div>
-                            </div>
-                        </blockquote>
-                    	<p>The simplest solution to optimizing your context value involves using useReducer or useState for your state management and putting the state in one context provider and the dispatch in another. Here's that:</p>
-                        <div class="image d-flex justify-content-center">
-                            <img src="images/resource/blog-1-1.png" alt=""/>
+                        <p>Here's how I write typical React components:</p>
+                    	<div class="image d-flex justify-content-center">
+                            <img src="images/resource/blog-3-1.png" alt=""/>
                         </div>
                         <br>
-                        <p>Not only do you not need to useMemo in this case, but you actually can avoid re-rendering the components that just use the updater context:</p>
+                        <p>Notice how I mix arrow functions and function declarations. The number of questions I get from people about this might surprise you. When I get a lot of questions about a subject, I blog about it, so here we go with that.</p>
+                        <br>
+                        <p>To be totally clear, there are four types of functions I'll discuss in this post:</p>
+                        <br>
+                        <ul class="list-style-two">
+                            <li>Function declarations</li>
+                            <li>Function expressions</li>
+                            <li>Arrow functions</li>
+                            <li>Object methods</li>
+                        </ul>
+                        <br>
                         <div class="image d-flex justify-content-center">
-                            <img src="images/resource/blog-1-2.mp4" alt=""/>
+                            <img src="images/resource/blog-3-2.png" alt=""/>
                         </div>
                         <br>
-                        <p>This is the same as with my original useMemo solution, except because the &lt;Counter /&gt; component's context isn't getting updated, we avoid the re-render of that component entirely which is cool.</p>
+                        <p>Each has slightly different semantics which I will not belabor in this post</p>
                         <br>
-                        <p>I personally feel like this is more complicated of an API than is necessary for most situations, so I wouldn't bother optimizing most of my contexts. But if you really have all the problems mentioned above, then consider doing this as a simple way to side-step the issue.</p>
+                        <p>I started coding JavaScript before arrow functions were a real thing. So I got used to using function declarations and function expressions. I developed some loose "rules" for myself for when to use one over the other. Here they are:</p>
                         <br>
-                        <h3>The state and dispatch separation is annoying</h3>
+                        <ul class="list-style-two">
+                            <li>I use a function expression if I'm passing the function as a callback.</li>
+                            <li>I use a function expression if I'm setting it to the property of an object.</li>
+                            <li>I use a function declaration every other time.</li>
+                        </ul>
                         <br>
-                        <p>Some people find this annoying/overly verbose:</p>
+                        <p>The reason I preferred function declarations is because of a simple feature of declarations over expressions: hoisting of the function definition.</p>
                         <div class="image d-flex justify-content-center">
-                            <img src="images/resource/blog-1-3.png" alt=""/>
+                            <img src="images/resource/blog-3-3.png" alt=""/>
                         </div>
                         <br>
-                        <p>Just keep in mind that any component that uses that, you will lose the performance benefits if it only needs one or the other.</p>
+                        <p>The error thrown was our favorite Uncaught TypeError: undefined is not a function (though these days it would be Uncaught TypeError: thisThrowsAnError is not a function because JS engines have gotten better at this kind of thing).</p>
+                        <br>
+                        <p>Remember, these are loose rules and I didn't always follow them, nor do I think they're worth enforcing via an ESLint rule or anything.</p>
+                        <br>
+                        <p>When arrow functions and object methods came around, my loose rules changed slightly:</p>
+                        <br>
+                        <ul class="list-style-two">
+                            <li>I use an arrow function if I'm passing the function as a callback.</li>
+                            <li>I use object methods when the function is multiple lines or I don't want to return anything, otherwise I use an arrow function.</li>
+                            <li>I use an arrow function if I want to leverage the implicit return or lexical scope feature (this works the way you normally want it to).</li>
+                            <li>I use a function declaration every other time.</li>
+                        </ul>
+                        <br>
+                        <p>And sometimes I'll make single-line, returning functions a function declaration anyway, just because it's easier to stick in a debugger statement or console.log.</p>
+                        <br>
+                        <p>These aren't really hard and fast rules or anything. There are more reasons to use different forms of functions. In fact, it's arguably better to use function expressions for callbacks because then you can give the function a name which will help debugging (so I'll do that sometimes for that reason).</p>
+                        <br>
+                        <p>Anyway, I hope that was interesting!</p>
+                        <br>
                     </div>
                     
                 </div>
@@ -159,18 +173,18 @@ No seriously, if you're going to do this stuff just because you think your code 
                     
                     <div class="pull-left prev-post">
                     	<div class="image">
-                        	<img src="images/resource/small blog 2.jpeg" alt="" />
+                        	<img src="images/resource/small blog 1.png" alt="" />
                         </div>
-                        <h4>useEffect vs useLayoutEffect</h4>
-                        <a href="blog-detail2.html">Previous Topic</a>
+                        <h4>How to optimize your context value</h4>
+                        <a href="blog-detail.html">Previous Topic</a>
                     </div>
                     
                     <div class="pull-right next-post">
                     	<div class="image">
-                        	<img src="images/resource/small blog 3.png" alt="" />
+                        	<img src="images/resource/small blog 2.jpeg" alt="" />
                         </div>
-                        <h4>Function forms</h4>
-                        <a href="blog-detail3.html">Next Topic</a>
+                        <h4>useEffect vs useLayoutEffect</h4>
+                        <a href="blog-detail2.html">Next Topic</a>
                     </div>
                     
                 </div>
