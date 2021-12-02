@@ -253,7 +253,7 @@
 		$('.variable-text').typeIt({
 			 strings: ["I am Full Stack Engineer"],
 			 speed: 150,
-			 breakLines: true,
+			 breakLines: false,
 			 loop:false,
 			 autoStart: true
 		});	
